@@ -1,0 +1,55 @@
+/* Date: 14.09.2021                                                                                                     *
+ * Signed-off-by: BERKAY YALÇIN < brky.yalcin@hotmail.com> 
+ * GitHub : https://github.com/brkyyalcin
+ */
+
+export const initialState = {
+    todos: []
+}
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "ADD_TODO":
+            return {
+                ...state,
+                todos: [action.payload, ...state.todos]
+            };
+        case "REMOVE_TODO":
+            return {
+                ...state,
+                todos: [...state.todos].filter(todo => todo.id !== action.payload)
+            };
+        case "COMPLETE_TODO":
+            return {
+                ...state,
+                todos: state.todos.map(todo => {
+                    if (todo.id !== action.payload){
+                        console.log("eee sonuç");
+                        return todo;
+                    }
+                    return {
+                        ...todo,
+                        isCompleted: !todo.isCompleted
+                    }
+                })
+            };
+            case "UPDATE_TODO":
+                return {
+                    ...state,
+                    todos: state.todos.map(todo => {
+                        if (todo.id !== action.payload.TodoId){
+                            return todo;
+                        }
+                        return {
+                            ...todo,
+                            content:action.payload.newValue 
+                        }
+                    })
+                };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+export default reducer;
